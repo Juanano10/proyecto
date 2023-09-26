@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from 'src/app/components/Navbar';
 import Footer from '@/components/Footer'; 
 
-function HomePage() {
+function inventario() {
   const movements = [
     { id: 1, date: '2023-09-25', description: 'Venta', product: 'Producto A', quantity: 5, type: 'Decremento' },
     { id: 2, date: '2023-09-24', description: 'Compra', product: 'Producto B', quantity: 10, type: 'Incremento' },
@@ -67,4 +67,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default inventario;
