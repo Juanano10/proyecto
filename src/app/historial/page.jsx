@@ -1,6 +1,5 @@
-import Navbar from 'src/app/components/Navbar';
-import Footer from '@/components/Footer';
-
+import Navbar from './../components/Navbar';
+import Footer from './../components/Footer';
 function historial() {
   const movements = [
     { id: 1, date: '2023-09-25', description: 'Venta', product: 'Producto A', quantity: 5, type: 'Decremento' },

@@ -1,6 +1,5 @@
-import React from 'react';
-import Navbar from 'src/app/components/Navbar';
-import Footer from '@/components/Footer'; 
+import Navbar from './../components/Navbar';
+import Footer from './../components/Footer';
 
 function analisis() {
   const sampleData = [

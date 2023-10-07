@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from 'src/app/components/Navbar';
-import Footer from '@/components/Footer'; 
-
+import Footer from './../components/Footer';
 function HomePage() {
   const movements = [
     { id: 1, date: '2023-09-25', description: 'Venta', product: 'Producto A', quantity: 5, type: 'Decremento' },
