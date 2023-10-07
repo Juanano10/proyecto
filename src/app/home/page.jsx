@@ -1,22 +1,22 @@
 import React from 'react';
+import Header from '@/components/Header';
 import Navbar from 'src/app/components/Navbar';
-import Footer from '@/components/Footer'; 
+import Footer from '@/components/Footer';
 
 function HomePage() {
   const movements = [
     { id: 1, date: '2023-09-25', description: 'Venta', product: 'Producto A', quantity: 5, type: 'Decremento' },
     { id: 2, date: '2023-09-24', description: 'Compra', product: 'Producto B', quantity: 10, type: 'Incremento' },
-    // Agregar más movimientos según sea necesario
   ];
 
   return (
     <div className="bg-indigo-600 min-h-screen flex flex-col">
+     <Header />
       <div className="flex-grow flex">
         <Navbar />
         <div className="bg-white flex-grow mt-1 mr-2 mb-2 rounded-lg p-4">
           <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-4">Sistema de Inventario</h1>
-
             {/* Búsqueda y Filtrado */}
             <div className="mb-4">
               <input
@@ -29,7 +29,6 @@ function HomePage() {
             {/* Lista de Productos con Búsqueda y Filtrado */}
             <div className="bg-white p-4 shadow-md rounded">
               <h2 className="text-xl font-semibold mb-2">Lista de Productos</h2>
-              {/* Aquí puedes mostrar la lista de productos con capacidades de búsqueda y filtrado */}
               <table className="w-full">
                 <thead>
                   <tr>

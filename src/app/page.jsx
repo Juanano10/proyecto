@@ -7,7 +7,6 @@ function LoginPage() {
         <form className="space-y-4">
           <h3 className="text-2xl font-bold text-white text-center">Inicio de Sesión</h3>
           <div>
-            
 
           </div>
           <div>
