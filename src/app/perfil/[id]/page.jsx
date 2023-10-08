@@ -10,7 +10,6 @@ async function getUser(id) {
 }
 
 async function ProfilePage({ params }) {
-  // Supongamos que obtienes los datos del usuario con la función getUser
   const user = await getUser(params.id);
 
   return (
