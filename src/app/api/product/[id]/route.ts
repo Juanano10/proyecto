@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import Product from "../../../models/Product";
-import { connectDB } from "../../../libs/mongodb";
+import Product from "../../../../models/Product";
+import { connectDB } from "../../../../libs/mongodb";
 
 export async function POST(request: Request) {
   const { name, description, price } = await request.json();
@@ -33,3 +33,11 @@ export async function POST(request: Request) {
     return NextResponse.error();
   }
 }
+
+
+export async function GET() {
+  await connectDB();
+  const products = await Product.find();
+  return NextResponse.json({products}, {status:200});
+      
+  }
