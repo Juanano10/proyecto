@@ -1,33 +1,36 @@
-"use client";
+"use client"
+import { useState } from "react";
+import axios, { AxiosError } from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { FormEvent, useState } from "react";
-import axios, { AxiosError } from "axios";
 
 function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
     const name = formData.get("name") as string;
-    const mail = formData.get("mail") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const role = formData.get("role") as UserRoles; // Nuevo campo "role"
 
-    if (!name.trim() || !mail.trim()) {
-      setError('Por favor, rellena los campos de nombre y correo.');
+    if (!name.trim() || !email.trim() || !password.trim() || !role) {
+      setError("Por favor, rellena todos los campos.");
       return;
     }
 
     try {
-      const res = await axios.post("/api/auth/register", {
-        email: mail,
-        password: formData.get("password"),
-        name: name,
+      const res = await axios.post("/api/usuarios/id", {
+        email,
+        password,
+        name,
+        role, // Pasamos el campo "role" al backend
       });
       console.log(res);
-      setSuccessMessage('¡Registro completado con éxito!');
+      setSuccessMessage("¡Registro completado con éxito!");
       setError(null);
     } catch (error) {
       console.log(error);
@@ -46,29 +49,45 @@ function RegisterPage() {
           <div className="container mx-auto p-4 mt-16">
             <div className="card">
               <form className="space-y-4" onSubmit={handleSubmit}>
-                {error && <div className="bg-slate-400 border-black border-4 text-black p-2 mb-2">{error}</div>}
-                {successMessage && <div className="bg-green-400 border-green-700 border-4 text-black p-2 mb-2">{successMessage}</div>}
+                {error && (
+                  <div className="bg-slate-400 border-black border-4 text-black p-2 mb-2">
+                    {error}
+                  </div>
+                )}
+                {successMessage && (
+                  <div className="bg-green-400 border-green-700 border-4 text-black p-2 mb-2">
+                    {successMessage}
+                  </div>
+                )}
                 <h3 className="text-2xl text-black font-bold text-center">
                   Registrar usuario
                 </h3>
                 <input
                   type="text"
-                  placeholder="Full name"
+                  placeholder="Nombre completo"
                   name="name"
                   className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
                 />
                 <input
                   type="email"
-                  placeholder="mail@mail.com"
-                  name="mail"
+                  placeholder="Correo electrónico"
+                  name="email"
                   className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
                 />
                 <input
                   type="password"
-                  placeholder="***"
+                  placeholder="Contraseña"
                   name="password"
                   className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
                 />
+                <select
+                  name="role"
+                  className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
+                >
+                  <option value="consultor">Consultor</option>
+                  <option value="reponedor">Reponedor</option>
+                  <option value="administrador">Administrador</option>
+                </select>
                 <button
                   className="bg-indigo-500 text-white px-5 py-2 w-full rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-700"
                   type="submit"
