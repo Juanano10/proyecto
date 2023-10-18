@@ -7,6 +7,7 @@ export interface ProductDocument extends Document {
   code: string;
   stock: Number;
   expirationDate: Date;
+  suppliers: string;
 }
 
 const productSchema = new mongoose.Schema({
@@ -19,6 +20,7 @@ const productSchema = new mongoose.Schema({
   suppliers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Provider" }],
 });
 
-const Product = mongoose.model<ProductDocument>("Product", productSchema);
+
+const Product = mongoose.models.Product || mongoose.model<ProductDocument>("Product", productSchema);
 
 export default Product;
