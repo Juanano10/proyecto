@@ -4,31 +4,31 @@ import Modal from 'react-modal';
 
 interface UpdateBtnProps {
   id: string;
-  name: string; // Agrega los campos de usuario (nombre, correo, etc.) para mostrar en el formulario
+  name: string;
   email: string;
-  // Agrega otros campos si es necesario
+  password: string;
+  role: string; // Cambié roles a role para consistencia
 }
 
-const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, email }) => {
+const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, email, password, role }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatedName, setUpdatedName] = useState(name);
   const [updatedEmail, setUpdatedEmail] = useState(email);
+  const [updatedPassword, setUpdatedPassword] = useState(password);
+  const [updatedRole, setUpdatedRole] = useState(role); // Cambié updatedRoles a updatedRole
 
   const handleUpdateUser = () => {
-    // Construye el objeto de datos para enviar al servidor (nombre, correo, etc.)
     const updatedUserData = {
       name: updatedName,
       email: updatedEmail,
-      // Agrega otros campos si es necesario
+      password: updatedPassword,
+      role: updatedRole,
     };
 
     axios
       .put(`/api/usuarios/${id}`, updatedUserData)
       .then((response) => {
-        // Realiza alguna acción adicional si es necesario después de la actualización
-        // Por ejemplo, puedes cerrar el modal o actualizar la lista de usuarios
-        setIsModalOpen(false); // Cierra el modal
-        // Puedes agregar una función para actualizar la lista de usuarios aquí si es necesario
+        setIsModalOpen(false);
       })
       .catch((error) => {
         console.error('Error al actualizar el usuario', error);
@@ -41,7 +41,6 @@ const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, email }) => {
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
 </svg>
-
       </button>
 
       <Modal
@@ -49,7 +48,6 @@ const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, email }) => {
         onRequestClose={() => setIsModalOpen(false)}
         contentLabel="Editar Usuario"
       >
-        {/* Contenido del formulario modal */}
         <h2>Editar Usuario</h2>
         <input
           type="text"
@@ -63,7 +61,23 @@ const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, email }) => {
           value={updatedEmail}
           onChange={(e) => setUpdatedEmail(e.target.value)}
         />
-        {/* Otros campos del formulario si es necesario */}
+        <input
+          type="password"
+          placeholder="Nueva contraseña"
+          value={updatedPassword}
+          onChange={(e) => setUpdatedPassword(e.target.value)}
+        />
+        <label>
+          Rol:
+          <select
+            value={updatedRole}
+            onChange={(e) => setUpdatedRole(e.target.value)}
+          >
+            <option value="consultor">Consultor</option>
+            <option value="reponedor">Reponedor</option>
+            <option value="administrador">Administrador</option>
+          </select>
+        </label>
         <button onClick={handleUpdateUser}>Actualizar</button>
         <button onClick={() => setIsModalOpen(false)}>Cancelar</button>
       </Modal>

@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { DeleteBtn } from "../components/DeleteBtn";
 import { UpdateBtn } from "../components/UpdateBtn";
+import React from "react";
 
 function HomePage() {
   const [users, setUsers] = useState([]);
@@ -46,8 +47,10 @@ function HomePage() {
 
             {/* Lista de Usuarios */}
             <div className="bg-white p-4 shadow-md rounded">
-              <h2 className="text-xl font-semibold mb-2 text-center">Lista de Usuarios</h2>
-              
+              <h2 className="text-xl font-semibold mb-2 text-center">
+                Lista de Usuarios
+              </h2>
+
               <table className="w-full">
                 <thead>
                   <tr>
@@ -73,9 +76,9 @@ function HomePage() {
                           {" "}
                           {/* Centro horizontalmente los botones */}
                           <button className="mx-2">
-                           <DeleteBtn />
+                            <DeleteBtn />
                           </button>
-                          <button className="mx-2">
+                          <button className="mx-2" >
                             <UpdateBtn />
                           </button>
                         </td>
