@@ -1,9 +1,13 @@
+// models/Product.ts
 import mongoose, { Document } from 'mongoose';
 
 export interface ProductDocument extends Document {
   name: string;
   price: number;
   description: string;
+  code: string;
+  stock:string;
+
 }
 
 const productSchema = new mongoose.Schema({
@@ -20,8 +24,14 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  code: {
+    type: String,
+    required: true,
+  },
+  stock: {
+    type: String,
+    required: true,
+  },
 });
 
-const Product = mongoose.model<ProductDocument>('Product', productSchema);
-
-export default Product;
+export default mongoose.models.Product || mongoose.model<ProductDocument>('Product', productSchema);

@@ -3,9 +3,9 @@ import Product from "../../../../models/Product";
 import { connectDB } from "../../../../libs/mongodb";
 
 export async function POST(request: Request) {
-  const { name, description, price } = await request.json();
+  const { name, description, price, code,stock } = await request.json();
 
-  if (!name || !description || price < 0) {
+  if (!name || !description || !price || !code || stock < 0) {
     return NextResponse.json(
       {
         message: "Todos los campos requeridos deben estar presentes y ser válidos.",
@@ -23,11 +23,20 @@ export async function POST(request: Request) {
       name,
       description,
       price,
+      code,
+      stock,
     });
 
     const savedProduct = await product.save();
+    console.log(savedProduct)
 
-    return NextResponse.json(savedProduct);
+    return NextResponse.json({
+      name: savedProduct.name,
+      price:savedProduct.price,
+      description:savedProduct.description,
+      code:savedProduct.code,
+      stock:savedProduct.stock,
+    });
   } catch (error) {
     console.log(error);
     return NextResponse.error();

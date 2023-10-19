@@ -22,7 +22,7 @@ const DeleteBtn: React.FC<DeleteBtnProps> = ({ id }) => {
 
   return (
     <button onClick={handleDeleteUser} className="text-red-500 hover:text-red-700">
-       <svg
+      <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
                               viewBox="0 0 24 24"

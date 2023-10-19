@@ -15,17 +15,22 @@ function inventario() {
     const name = formData.get('name') as string;
     const price = parseFloat(formData.get('price') as string); // Parse price as a number
     const description = formData.get('description') as string;
+    const code = parseFloat(formData.get('code') as string);
+    const stock = parseFloat(formData.get('stock') as string);
+    
 
-    if (!name.trim() || isNaN(price) || !description.trim()) {
+    if (!name.trim() || isNaN(price) || isNaN(code)|| isNaN(stock)|| !description.trim()) {
       setError('Por favor, completa todos los campos correctamente.');
       return;
     }
 
     try {
-      const response = await axios.post('/api/product', {
+      const response = await axios.post('/api/product/id', {
         name: name,
         price: price,
         description: description,
+        code:code,
+        stock:stock,
       });
 
       console.log(response);
@@ -69,6 +74,18 @@ function inventario() {
                   type="text"
                   placeholder="Descripción"
                   name="description"
+                  className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
+                />
+                <input
+                  type="text"
+                  placeholder="Nombre del codigo"
+                  name="code"
+                  className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
+                />
+                <input
+                  type="text"
+                  placeholder="cantidad de stock"
+                  name="stock"
                   className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
                 />
                 <button

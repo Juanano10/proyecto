@@ -6,8 +6,8 @@ import axios from "axios";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { DeleteBtn } from "../components/DeleteBtn";
-import { UpdateBtn } from "../components/UpdateBtn";
+import { DeleteBtn } from "../components/BtnUsers/DeleteBtn";
+import { UpdateBtn } from "../components/BtnUsers/UpdateBtn";
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -54,6 +54,8 @@ function HomePage() {
                     <th>Nombre</th>
                     <th>Correo</th>
                     <th>Rol</th>
+                    <th>Codigo</th>
+                    <th>Stock</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -69,6 +71,8 @@ function HomePage() {
                         <td className="text-center">{product.name}</td>
                         <td className="text-center">{product.price}</td>
                         <td className="text-center">{product.description}</td>
+                        <td className="text-center">{product.code}</td>
+                        <td className="text-center">{product.stock}</td>
                         <td className="flex justify-center">
                           {" "}
                           {/* Centro horizontalmente los botones */}

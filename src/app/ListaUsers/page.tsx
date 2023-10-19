@@ -6,8 +6,8 @@ import axios from "axios";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { DeleteBtn } from "../components/DeleteBtn";
-import { UpdateBtn } from "../components/UpdateBtn";
+import { DeleteBtn } from "../components/BtnUsers/DeleteBtn";
+import { UpdateBtn } from "../components/BtnUsers/UpdateBtn";
 
 function HomePage() {
   const [users, setUsers] = useState([]);
@@ -53,6 +53,7 @@ function HomePage() {
                   <tr>
                     <th>Nombre</th>
                     <th>Correo</th>
+                    <th>Id</th>
                     <th>Rol</th>
                     <th>Acciones</th>
                   </tr>
@@ -68,15 +69,20 @@ function HomePage() {
                       <tr key={user._id}>
                         <td className="text-center">{user.name}</td>
                         <td className="text-center">{user.email}</td>
+                        <td className="text-center">{user._id}</td>
                         <td className="text-center">{user.role}</td>
                         <td className="flex justify-center">
                           {" "}
                           {/* Centro horizontalmente los botones */}
                           <button className="mx-2">
-                           <DeleteBtn />
+                          <DeleteBtn id = {user._id} />
                           </button>
                           <button className="mx-2">
-                            <UpdateBtn />
+                            <UpdateBtn id={user._id}
+                            name={user.name}
+                            email={user.email}
+                            role={user.role}
+                            password={user.password}/>
                           </button>
                         </td>
                       </tr>
