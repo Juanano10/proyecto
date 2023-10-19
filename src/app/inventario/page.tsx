@@ -13,25 +13,19 @@ function inventario() {
     const formData = new FormData(e.currentTarget);
 
     const name = formData.get('name') as string;
-    const price = parseFloat(formData.get('price') as string);
+    const price = parseFloat(formData.get('price') as string); // Parse price as a number
     const description = formData.get('description') as string;
-    const code = formData.get('code') as string;
-    const stock = parseFloat(formData.get('stock') as string);
-    const expirationDate = new Date(formData.get('expirationDate') as string);
 
-    if (!name.trim() || isNaN(price) || !description.trim() || !code.trim() || isNaN(stock)) {
+    if (!name.trim() || isNaN(price) || !description.trim()) {
       setError('Por favor, completa todos los campos correctamente.');
       return;
     }
 
     try {
-      const response = await axios.post('/api/product/id', {
-        name,
-        price,
-        description,
-        code,
-        stock,
-        expirationDate,
+      const response = await axios.post('/api/product', {
+        name: name,
+        price: price,
+        description: description,
       });
 
       console.log(response);
@@ -54,12 +48,8 @@ function inventario() {
           <div className="container mx-auto p-4 mt-16">
             <div className="card">
               <form className="space-y-4" onSubmit={handleSubmit}>
-                {error && (
-                  <div className="bg-slate-400 border-black border-4 text-black p-2 mb-2">{error}</div>
-                )}
-                {successMessage && (
-                  <div className="bg-green-400 border-green-700 border-4 text-black p-2 mb-2">{successMessage}</div>
-                )}
+                {error && <div className="bg-slate-400 border-black border-4 text-black p-2 mb-2">{error}</div>}
+                {successMessage && <div className="bg-green-400 border-green-700 border-4 text-black p-2 mb-2">{successMessage}</div>}
                 <h3 className="text-2xl text-black font-bold text-center">
                   Registrar Producto
                 </h3>
@@ -79,23 +69,6 @@ function inventario() {
                   type="text"
                   placeholder="Descripción"
                   name="description"
-                  className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
-                />
-                <input
-                  type="text"
-                  placeholder="Código del Producto"
-                  name="code"
-                  className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
-                />
-                <input
-                  type="number"
-                  placeholder="Stock"
-                  name="stock"
-                  className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
-                />
-                <input
-                  type="date"
-                  name="expirationDate"
                   className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
                 />
                 <button

@@ -38,13 +38,13 @@ function HomePage() {
               <input
                 className="border border-gray-400 py-2 px-4 w-full rounded-md"
                 type="text"
-                placeholder="Buscar productos por nombre"
+                placeholder="Buscar usuarios por correo"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               />
             </div>
 
-            {/* Lista de Productos */}
+            {/* Lista de Usuarios */}
             <div className="bg-white p-4 shadow-md rounded">
               <h2 className="text-xl font-semibold mb-2 text-center">Lista de Usuarios</h2>
               
@@ -52,11 +52,9 @@ function HomePage() {
                 <thead>
                   <tr>
                     <th>Nombre</th>
-                    <th>precio</th>
-                    <th>Descripcion</th>
-                    <th>Codigo</th>
-                    <th>Stock</th>
-                    <th>Fecha de expiracion</th> 
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -71,9 +69,6 @@ function HomePage() {
                         <td className="text-center">{product.name}</td>
                         <td className="text-center">{product.price}</td>
                         <td className="text-center">{product.description}</td>
-                        <td className="text-center">{product.code}</td>
-                        <td className="text-center">{product.stock}</td>
-                        <td className="text-center">{product.expirationDate}</td>
                         <td className="flex justify-center">
                           {" "}
                           {/* Centro horizontalmente los botones */}

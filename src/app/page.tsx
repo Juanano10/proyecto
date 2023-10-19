@@ -22,69 +22,44 @@ function LoginPage() {
       if (res ?.ok) return route.push('/home')
      console.log(res)
     };
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-indigo-700 to-purple-500 relative">
-        <div className="flex items-center justify-center min-h-screen sm:flex-col">
-          <div className="w-full max-w-3xl p-4 rounded-lg shadow-lg bg-opacity-80 bg-white mt-10 relative grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-4 bg-opacity-70">
-              <div className="mb-4 text-left text-black">
-                <h2 className="text-2xl sm:text-3xl font-bold text-center mb-2">
-                  Inicio de Sesión
-                </h2>
-                <p className="text-sm sm:text-base font-bold text-center text-gray-800">
-                  Ingresa tus credenciales para acceder a nuestra plataforma.
-                </p>
-              </div>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {error && (
-                  <div className="bg-opacity-80 bg-red-100 border border-red-500 text-red-700 p-2">
-                    {error}
-                  </div>
-                )}
-                <div className="text-center">
-                  <input
-                    className="bg-opacity-80 border border-gray-400 w-full sm:w-64 py-2 sm:py-3 rounded-md inline-block"
-                    type="email"
-                    placeholder="Correo Electrónico"
-                    name="email"
-                  />
-                </div>
-                <div className="text-center">
-                  <input
-                    className="bg-opacity-80 border border-gray-400 w-full sm:w-64 py-2 sm:py-3 rounded-md inline-block"
-                    type="password"
-                    placeholder="Contraseña"
-                    name="password"
-                  />
-                </div>
-                <div className="text-center">
-                  <button
-                    className="bg-opacity-80 bg-indigo-500 text-white w-full sm:w-64 py-3 sm:py-2 rounded-md mx-auto hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-700 shadow-md border border-indigo-500"
-                    type="submit"
-                  >
-                    Iniciar Sesión
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="p-4 bg-gradient-to-b from-indigo-700 to-purple-500 relative">
-              <div className="text-sm text-left text-black">
-                <h2 className="text-2xl sm:text-3xl font-bold text-center relative mb-4">
-                  <span className="text-purple-500">FillFast</span>
-                  <span className="text-black">Technology</span>
-                  <span className="absolute -bottom-5 left-0 w-full h-1 bg-indigo-400"></span>
-                </h2>
-                <p className="text-base sm:text-lg font-semibold text-center text-gray-1100 mb-4">
-                  Potencia tu negocio con una gestión de inventario inteligente.
-                  Controla tus productos y optimiza tus operaciones con nuestra
-                  plataforma de gestión de inventario.
-                </p>
-              </div>
-            </div>
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-500">
+      <div className="bg-zinc-700 rounded-md p-10 w-96">
+        <form  onSubmit={handleSubmit} className="space-y-4">
+        {error && <div className=" bg-slate-400 border-black border-4 text-black p-2 mb-2">{error}</div>}
+          <h3 className="text-2xl font-bold text-white text-center">Inicio de Sesión</h3>
+          <div>
+
           </div>
-        </div>
+          <div>
+            <input
+              className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
+              type="email"
+              placeholder="Correo Electrónico"
+              name="email"
+            />
+          </div>
+          <div>
+            <input
+              className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
+              type="password"
+              placeholder="Contraseña"
+              name="password"
+            />
+          </div>
+          <div>
+            <button
+              className="bg-indigo-500 text-white px-5 py-2 w-full rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-700"
+              type="submit"
+            >
+              Iniciar Sesión
+            </button>
+          </div>
+        </form>
       </div>
-    );
-  }
+    </div>
+  );
+  
+}
 
 export default LoginPage
