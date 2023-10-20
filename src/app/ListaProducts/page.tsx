@@ -6,8 +6,9 @@ import axios from "axios";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { DeleteBtn } from "../components/BtnUsers/DeleteBtn";
-import { UpdateBtn } from "../components/BtnUsers/UpdateBtn";
+import { UpdateBtn } from "../components/BtnProduct/UpdateBtn";
+import Link from "next/link";
+
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -30,9 +31,28 @@ function HomePage() {
       <Header />
       <div className="flex-grow flex">
         <Navbar />
+        <div className="mb-4"></div>
+        <div className="mb-4"></div>
         <div className="bg-white flex-grow mt-1 mr-2 mb-2 rounded-lg p-4">
           <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-4">Sistema de Inventario</h1>
+            
+            <div className="flex items-center justify-between mb-4"> 
+              {/* Añadimos margen inferior para mantener el espacio */}
+              <h1 className="text-3xl font-bold flex-grow">Sistema de Inventario</h1>
+  
+              <Link href="/inventario">
+                <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    strokeWidth={1.5} 
+                    stroke="currentColor" 
+                    className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+              </Link>
+            </div>
+  
             {/* Búsqueda y Filtrado */}
             <div className="mb-4">
               <input
@@ -43,17 +63,18 @@ function HomePage() {
                 onChange={(e) => setSearchText(e.target.value)}
               />
             </div>
-
-            {/* Lista de Usuarios */}
+  
             <div className="bg-white p-4 shadow-md rounded">
-              <h2 className="text-xl font-semibold mb-2 text-center">Lista de Usuarios</h2>
-              
+              <h2 className="text-xl font-semibold mb-2 text-center">
+                Lista de Productos
+              </h2>
+  
               <table className="w-full">
                 <thead>
                   <tr>
                     <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Rol</th>
+                    <th>Precio</th>
+                    <th>Descripcion</th>
                     <th>Codigo</th>
                     <th>Stock</th>
                     <th>Acciones</th>
@@ -74,13 +95,14 @@ function HomePage() {
                         <td className="text-center">{product.code}</td>
                         <td className="text-center">{product.stock}</td>
                         <td className="flex justify-center">
-                          {" "}
-                          {/* Centro horizontalmente los botones */}
+                          <button className="mx-2"></button>
                           <button className="mx-2">
-                           <DeleteBtn />
-                          </button>
-                          <button className="mx-2">
-                            <UpdateBtn />
+                            <UpdateBtn id={product._id}
+                            name={product.name}
+                            email={product.price}
+                            role={product.description}
+                            password={product.code}
+                            password={product.stock}/>
                           </button>
                         </td>
                       </tr>
@@ -94,6 +116,7 @@ function HomePage() {
       <Footer />
     </div>
   );
+  
 }
 
 export default HomePage;

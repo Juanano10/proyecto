@@ -5,37 +5,41 @@ import Modal from 'react-modal';
 interface UpdateBtnProps {
   id: string;
   name: string;
-  email: string;
-  role: string;
-  password: string;
-  // Agrega otros campos si es necesario
+  price: number;
+  description: string;
+  code: string;
+  stock: string;
 }
 
-const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, email, role, password }) => {
+const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, price, description, code, stock }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatedName, setUpdatedName] = useState(name);
-  const [updatedEmail, setUpdatedEmail] = useState(email);
-  const [updatedRole, setUpdatedRole] = useState(role);
-  const [updatedPass, setUpdatedPass] = useState(password);
+  const [updatedPrice, setUpdatedPrice] = useState(price);
+  const [updatedDescription, setUpdatedDescription] = useState(description);
+  const [updatedCode, setUpdatedCode] = useState(code);
+  const [updatedStock, setUpdatedStock] = useState(stock);
 
-  const handleUpdateUser = () => {
-    const updatedUserData = {
-      id, // Pasar el ID al objeto de datos
+  const handleUpdateProduct = () => {
+    const updatedProductData = {
+      id,
       name: updatedName,
-      email: updatedEmail,
-      role: updatedRole,
-      password: updatedPass,
-      // Agregar otros campos si es necesario
+      price: updatedPrice,
+      description: updatedDescription,
+      code: updatedCode,
+      stock: updatedStock,
     };
 
+    console.log("Datos a enviar:", updatedProductData);
+
     axios
-      .put(`/api/usuarios/${id}`, updatedUserData)
+      .put(`/api/product/${id}`, updatedProductData)
       .then((response) => {
+        console.log("Respuesta del servidor:", response);
         setIsModalOpen(false);
-        window.location.reload(); // Recargar la página después de la actualización
+        window.location.reload();
       })
       .catch((error) => {
-        console.error('Error al actualizar el usuario', error);
+        console.error('Error al actualizar el producto', error);
       });
   };
 
@@ -50,9 +54,10 @@ const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, email, role, password }
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
-        contentLabel="Editar Usuario"
-        className="bg-white rounded-lg p-6 mx-auto mt-10 w-3/4 md:w-1/2 lg:w-1/3">
-        <h2 className="text-2xl mb-4 font-bold">Editar Usuario</h2>
+        contentLabel="Editar Producto"
+        className="bg-white rounded-lg p-6 mx-auto mt-10 w-3/4 md:w-1/2 lg:w-1/3"
+      >
+        <h2 className="text-2xl mb-4 font-bold">Editar Producto</h2>
         <input
           type="text"
           placeholder="Nuevo nombre"
@@ -61,33 +66,41 @@ const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, email, role, password }
           className="p-2 mb-4 border rounded w-full"
         />
         <input
-          type="text"
-          placeholder="Nuevo rol"
-          value={updatedRole}
-          onChange={(e) => setUpdatedRole(e.target.value)}
+          type="number"
+          placeholder="Nuevo precio"
+          value={updatedPrice}
+          onChange={(e) => setUpdatedPrice(Number(e.target.value))}
           className="p-2 mb-4 border rounded w-full"
         />
         <input
           type="text"
-          placeholder="Nuevo Password"
-          value={updatedPass}
-          onChange={(e) => setUpdatedPass(e.target.value)}
+          placeholder="Nueva descripción"
+          value={updatedDescription}
+          onChange={(e) => setUpdatedDescription(e.target.value)}
           className="p-2 mb-4 border rounded w-full"
         />
         <input
           type="text"
-          placeholder="Nuevo correo"
-          value={updatedEmail}
-          onChange={(e) => setUpdatedEmail(e.target.value)}
+          placeholder="Nuevo código"
+          value={updatedCode}
+          onChange={(e) => setUpdatedCode(e.target.value)}
+          className="p-2 mb-4 border rounded w-full"
+        />
+        <input
+          type="text"
+          placeholder="Nuevo stock"
+          value={updatedStock}
+          onChange={(e) => setUpdatedStock(e.target.value)}
           className="p-2 mb-4 border rounded w-full"
         />
         <div className="flex justify-end gap-4">
             <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded focus:outline-none">Cancelar</button>
-            <button onClick={handleUpdateUser} className="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded focus:outline-none">Actualizar</button>
+            <button onClick={handleUpdateProduct} className="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded focus:outline-none">Actualizar</button>
         </div>
       </Modal>
     </div>
 );
+
 };
 
 export { UpdateBtn };

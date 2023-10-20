@@ -3,6 +3,7 @@ import React, { FormEvent, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Header from "../components/Header";
 
 function inventario() {
   const [error, setError] = useState<string | null>(null);
@@ -47,6 +48,7 @@ function inventario() {
 
   return (
     <div className="bg-indigo-600 min-h-screen flex flex-col">
+      <Header />
       <div className="flex-grow flex">
         <Navbar />
         <div className="bg-white flex-grow mr-2 mb-2 rounded-lg p-4 mt-6">
@@ -83,7 +85,7 @@ function inventario() {
                   className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"
                 />
                 <input
-                  type="text"
+                  type="number"
                   placeholder="cantidad de stock"
                   name="stock"
                   className="bg-zinc-700 px-4 py-2 w-full text-white placeholder-gray-400 border rounded-md focus:outline-none focus:ring focus:border-indigo-500"

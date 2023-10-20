@@ -53,7 +53,7 @@ export async function GET() {
   const users = await User.find();
   return NextResponse.json({users}, {status:200});
       
-  }
+}
 
 export async function DELETE(){
   await connectDB();
@@ -61,7 +61,7 @@ export async function DELETE(){
   return NextResponse.json({DelUser}) 
 }
 
-export async function PUT(request: Request) {
+export async function PUT(request: Request): Promise<any>  {
   const { id, name, email, password, role } = await request.json();
 
   if (!id || !password || password.length < 6) {
@@ -94,13 +94,15 @@ export async function PUT(request: Request) {
       });
     } else {
       return NextResponse.json(
-        {
-          message: "Usuario no encontrado.",
-        },
-        {
-          status: 404,
-        }
-      );
+  {
+    message: "Ha ocurrido un error al actualizar el producto.",
+    error: error.message,
+  },
+  {
+    status: 500,
+  }
+);
+
     }
   } catch (error) {
     console.error(error);
