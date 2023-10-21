@@ -1,28 +1,24 @@
 import React from 'react';
 
 function Header() {
+  // Aquí puedes reemplazar "nombreUsuario" con el nombre de usuario real
+  const nombreUsuario = "Usuario";
+
   return (
-    <header className="animate-slideDown transition-all duration-500 ease-in-out p-4 bg-gradient-to-r from-indigo-600 to-indigo-900">
+    <header className="animate-slideDown transition-all duration-500 ease-in-out p-4 bg-gradient-to-r from-gray-800 to-indigo-900">
       <div className="container mx-auto flex justify-between items-center">
-        {/* Logo o Nombre del Sitio */}
+        {/* Logo o Nombre del Sitio (a la izquierda) */}
         <div className="text-3xl font-extrabold text-white cursor-pointer">
-          <span>FillFast</span><span className="text-indigo-300">Technology</span>
+          <span>FillFast</span><span className="text-blue-500">Technology</span>
         </div>
 
-        {/* Íconos de Funcionalidades a la Derecha */}
-        <div className="flex space-x-4">
-          {/* Ícono de Subir Video */}
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white hover:text-indigo-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
+        {/* Contenedor del Nombre de Usuario e Ícono de Perfil de Usuario (a la derecha) */}
+        <div className="flex items-center space-x-2">
+          <div className="text-white">{nombreUsuario}</div>
 
-          {/* Ícono de Apps */}
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white hover:text-indigo-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-white hover:text-blue-500 cursor-pointer">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
           </svg>
-
-          {/* Más Íconos (Reemplaza estos con los íconos que necesites) */}
-          {/* ... */}
         </div>
       </div>
     </header>
@@ -30,5 +26,3 @@ function Header() {
 }
 
 export default Header;
-
-
