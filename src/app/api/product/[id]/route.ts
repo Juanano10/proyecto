@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Product from "../../../../models/Product";
 import { connectDB } from "../../../../libs/mongodb";
+import InventoryTransaction from "../../../../models/InventarioTrans";
 
 export async function POST(request: Request) {
   const { 
@@ -61,7 +62,7 @@ export async function PUT(request: Request): Promise<any> {
   if (!id || !name || price === undefined || !description || !code || stock === undefined) {
     return NextResponse.json(
       {
-        message: "ID es requerido.",
+        message: "Los campos son requeridos.",
       },
       {
         status: 400,
@@ -74,6 +75,19 @@ export async function PUT(request: Request): Promise<any> {
     const productFound = await Product.findById(id);
 
     if (productFound) {
+      const transactionType = stock > productFound.stock ? "entrada" : "salida";
+      const stockDifference = Math.abs(stock - productFound.stock);
+
+      // Crear una nueva transacción sin el campo user
+      const transaction = new InventoryTransaction({
+        type: transactionType,
+        product: productFound._id,
+        Stock: stockDifference,
+      });
+
+      await transaction.save();
+
+      // Actualizar el producto
       productFound.name = name;
       productFound.price = price;
       productFound.description = description;
@@ -101,7 +115,15 @@ export async function PUT(request: Request): Promise<any> {
     }
   } catch (error) {
     console.error(error);
-    return NextResponse.error();
+    return NextResponse.json(
+      {
+        message: "Error interno del servidor.",
+      },
+      {
+        status: 500, // Código de estado general para "Error Interno del Servidor"
+      }
+    );
   }
 }
+
 

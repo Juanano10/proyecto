@@ -1,24 +1,26 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-
+// 1. Eliminado el campo user de la interfaz
 export interface InventoryTransactionDocument extends Document {
   type: 'entrada' | 'salida';
   product: Schema.Types.ObjectId;
-  quantity: number;
+  Stock: number;
   timestamp?: Date;
-  user?: Schema.Types.ObjectId;
 }
-
 
 const inventoryTransactionSchema = new Schema<InventoryTransactionDocument>({
   type: { type: String, enum: ['entrada', 'salida'], required: true },
   product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
-  quantity: { type: Number, required: true },
+  Stock: { type: Number, required: true },
   timestamp: { type: Date, default: Date.now },
-  user: { type: Schema.Types.ObjectId, ref: 'User' }, 
+  // 2. Eliminado el campo user del esquema
 });
 
 
-const InventoryTransaction = mongoose.model<InventoryTransactionDocument>('InventoryTransaction', inventoryTransactionSchema);
+const modelName = 'InventoryTransaction';
+const InventoryTransaction = mongoose.models[modelName] 
+  ? mongoose.model<InventoryTransactionDocument>(modelName) 
+  : mongoose.model<InventoryTransactionDocument>(modelName, inventoryTransactionSchema);
 
 export default InventoryTransaction;
+

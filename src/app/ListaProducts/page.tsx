@@ -8,7 +8,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { UpdateBtn } from "../components/BtnProduct/UpdateBtn";
 import Link from "next/link";
-
+import { InventoryTransactionDocument } from "../../models/InventarioTrans";
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -17,7 +17,7 @@ function HomePage() {
   useEffect(() => {
     // Realiza una solicitud GET a tu punto final de la API para obtener la lista de usuarios
     axios
-      .get("/api/product/id")
+      .get("/api/inventariotrans/id")
       .then((response) => {
         setProducts(response.data.products);
       })

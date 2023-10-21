@@ -4,13 +4,13 @@ import Chart from 'chart.js/auto';
 
 const Dashboard = () => {
   useEffect(() => {
-    // Datos para el gráfico de barras (puedes personalizarlos)
+    
     const barChartData = {
       labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
       datasets: [
         {
           label: 'Ventas',
-          data: [12, 19, 3, 5, 2],
+          data: [5, 19, 3, 5, 2],
           backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color de fondo de las barras
           borderColor: 'rgba(75, 192, 192, 1)', // Borde de las barras
           borderWidth: 1,
