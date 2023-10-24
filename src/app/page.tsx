@@ -23,7 +23,9 @@ function LoginPage() {
      console.log(res)
     };
     return (
-      <div className="min-h-screen bg-gradient-to-b from-indigo-700 to-purple-500 relative">
+      <div className="min-h-screen bg-gradient-to-b from-indigo-700 to-purple-500 relative" style={{
+        backgroundImage: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2mMsT7tWPCglVISSGbIKZaHbwFtmrXqROzVOvEasLdQ&s')",
+      }}>
         <div className="flex items-center justify-center min-h-screen sm:flex-col">
           <div className="w-full max-w-3xl p-4 rounded-lg shadow-lg bg-opacity-80 bg-white mt-10 relative grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 bg-opacity-70">

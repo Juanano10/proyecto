@@ -4,16 +4,15 @@ import mongoose, { Document, Schema } from 'mongoose';
 export interface InventoryTransactionDocument extends Document {
   type: 'entrada' | 'salida';
   product: Schema.Types.ObjectId;
-  Stock: number;
+  stock: string;
   timestamp?: Date;
 }
 
 const inventoryTransactionSchema = new Schema<InventoryTransactionDocument>({
   type: { type: String, enum: ['entrada', 'salida'], required: true },
   product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
-  Stock: { type: Number, required: true },
+  stock: { type: String, required: true },
   timestamp: { type: Date, default: Date.now },
-  // 2. Eliminado el campo user del esquema
 });
 
 

@@ -1,44 +1,60 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Chart from 'chart.js/auto';
+import axios from 'axios';
 
 const Dashboard = () => {
+  const [productData, setProductData] = useState([]);
+
   useEffect(() => {
-    
-    const barChartData = {
-      labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
-      datasets: [
-        {
-          label: 'Ventas',
-          data: [5, 19, 3, 5, 2],
-          backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color de fondo de las barras
-          borderColor: 'rgba(75, 192, 192, 1)', // Borde de las barras
-          borderWidth: 1,
-        },
-      ],
-    };
+    // Llamada a la API para obtener datos de los productos
+    axios.get("/api/product/id")
+      .then(response => {
+        const productNames = response.data.products.map(p => p.name);
+        const productStocks = response.data.products.map(p => p.stock);
 
-    const ctx = document.getElementById('barChart').getContext('2d');
+        setProductData({
+          labels: productNames,
+          datasets: [
+            {
+              label: 'Stock de productos',
+              data: productStocks,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1,
+            },
+          ],
+        });
+      })
+      .catch(error => {
+        console.error("Error al obtener la lista de productos", error);
+      });
+  }, []);
 
-    // Destruye el gráfico anterior si existe
-    const existingChart = Chart.getChart(ctx);
-    if (existingChart) {
-      existingChart.destroy();
-    }
+  useEffect(() => {
+    if (productData.labels && productData.labels.length > 0) {
+      const ctx = document.getElementById('barChart').getContext('2d');
 
-    // Crea un nuevo gráfico de barras
-    new Chart(ctx, {
-      type: 'bar',
-      data: barChartData,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
+      // Destruye el gráfico anterior si existe
+      const existingChart = Chart.getChart(ctx);
+      if (existingChart) {
+        existingChart.destroy();
+      }
+
+      // Crea un nuevo gráfico de barras con los datos obtenidos
+      new Chart(ctx, {
+        type: 'bar',
+        data: productData,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
           },
         },
-      },
-    });
-  }, []);
+      });
+    }
+  }, [productData]);
 
   return (
     <div>

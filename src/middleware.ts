@@ -11,6 +11,7 @@ export const config = {
         '/analisis',
         '/informes',
         '/perfil',
+        '/ListaProducts',
     ]
 
 }

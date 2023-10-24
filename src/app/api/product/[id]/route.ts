@@ -1,23 +1,15 @@
 import { NextResponse } from "next/server";
-import Product from "../../../../models/Product";
+import Product, {ProductDocument }from "../../../../models/Product";
 import { connectDB } from "../../../../libs/mongodb";
 import InventoryTransaction from "../../../../models/InventarioTrans";
 
-export async function POST(request: Request) {
-  const { 
-    name, 
-    description, 
-    price, 
-    code, 
-    stock, 
-    expirationDate 
-  } = await request.json();
+export async function POST(request: Request): Promise<any> {
+  const { name, price, description, code, stock } = await request.json();
 
-  // Validación básica
-  if (!name || !description || price < 0 || !code || stock < 0) {
+  if (!name || price === undefined || !description || !code || stock === undefined) {
     return NextResponse.json(
       {
-        message: "Todos los campos requeridos deben estar presentes y ser válidos.",
+        message: "Todos los campos son requeridos y deben ser válidos.",
       },
       {
         status: 400,
@@ -28,24 +20,47 @@ export async function POST(request: Request) {
   try {
     await connectDB();
 
+    // Crear un nuevo producto
     const product = new Product({
       name,
-      description,
       price,
+      description,
       code,
       stock,
-      expirationDate: expirationDate ? new Date(expirationDate) : undefined // Si no se proporciona una fecha de expiración, se establece en undefined.
     });
+    await product.save();
 
-    const savedProduct = await product.save();
+    // Crear una nueva transacción en InventoryTransaction
+    const transactionType = "entrada"; // Asumiendo que este es el valor predeterminado
+    const stockDifference = stock; // Stock completo
 
-    return NextResponse.json(savedProduct);
+    const transaction = new InventoryTransaction({
+      type: transactionType,
+      product: product._id,
+      stock: stockDifference,
+    });
+    await transaction.save();
+
+    return NextResponse.json({
+      name: product.name,
+      price: product.price,
+      description: product.description,
+      code: product.code,
+      stock: product.stock,
+      _id: product._id,
+    });
   } catch (error) {
-    console.log(error);
-    return NextResponse.error();
+    console.error(error);
+    return NextResponse.json(
+      {
+        message: "Error interno del servidor.",
+      },
+      {
+        status: 500, // Código de estado general para "Error Interno del Servidor"
+      }
+    );
   }
 }
-
 
 
 export async function GET() {
@@ -82,7 +97,7 @@ export async function PUT(request: Request): Promise<any> {
       const transaction = new InventoryTransaction({
         type: transactionType,
         product: productFound._id,
-        Stock: stockDifference,
+        stock: stockDifference,
       });
 
       await transaction.save();
@@ -125,5 +140,6 @@ export async function PUT(request: Request): Promise<any> {
     );
   }
 }
+
 
 

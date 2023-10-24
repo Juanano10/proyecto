@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import React, { FormEvent, useState } from "react";
 import axios, { AxiosError } from "axios";

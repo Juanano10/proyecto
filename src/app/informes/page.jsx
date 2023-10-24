@@ -1,6 +1,7 @@
 
 import Navbar from './../components/Navbar';
 import Footer from './../components/Footer';
+import Header from '../components/Header';
 
 function ReportPage() {
   const reportData = [
@@ -11,7 +12,8 @@ function ReportPage() {
   ];
 
   return (
-    <div className="bg-indigo-600 min-h-screen flex flex-col">
+    <div className="bg-gray-900 min-h-screen flex flex-col">
+    <Header />
       <div className="flex-grow flex">
         <Navbar />
         <div className="bg-white flex-grow mt-1 mr-2 mb-2 rounded-lg p-4">

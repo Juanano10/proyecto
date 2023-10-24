@@ -10,13 +10,13 @@ import { InventoryTransactionDocument } from "../../models/InventarioTrans";
 
 function Historial() {
   const [inventariotrans, setInventarioTrans] = useState<InventoryTransactionDocument[]>([]);
-  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
+    // Cambia la ruta de la solicitud a la correcta
     axios
-      .get("/api/inventariotrans/id")
+      .get("/api/InventoryTransaction/id")
       .then((response) => {
-        setInventarioTrans(response.data.inventoryTransactions);
+        setInventarioTrans(response.data.history);
       })
       .catch((error) => {
         console.error("Error al obtener la lista de transacciones", error);
@@ -24,7 +24,7 @@ function Historial() {
   }, []);
 
   return (
-    <div className="bg-indigo-600 min-h-screen flex flex-col">
+    <div className="bg-gray-900 min-h-screen flex flex-col">
       <Header />
       <div className="flex-grow flex">
         <Navbar />
@@ -44,9 +44,9 @@ function Historial() {
                 <tbody>
                   {inventariotrans.map((trans) => (
                     <tr key={trans._id}>
-                      <td className="border px-4 py-2">{new Date(trans.timestamp!).toLocaleDateString()}</td>
+                      <td className="border px-4 py-2">{new Date(trans.timestamp).toLocaleDateString()}</td>
                       <td className="border px-4 py-2">{trans.product /* Si product es un ObjectId, se necesita más información para mostrarlo adecuadamente */}</td>
-                      <td className="border px-4 py-2">{trans.Stock}</td>
+                      <td className="border px-4 py-2">{trans.stock}</td>
                       <td className={`border px-4 py-2 ${trans.type === 'entrada' ? 'text-green-600' : 'text-red-600'}`}>
                         {trans.type === 'entrada' ? 'Incremento' : 'Decremento'}
                       </td>

@@ -25,7 +25,7 @@ function analisis() {
   const productosConMasStock = products.slice().sort((a, b) => b.stock - a.stock).slice(0, 5);
 
   return (
-    <div className="bg-indigo-600 min-h-screen flex flex-col">
+    <div className="bg-slate-900 min-h-screen flex flex-col">
       <Header />  
       <div className="flex-grow flex">
         <Navbar />
@@ -43,6 +43,7 @@ function analisis() {
                   {productosConMenosStock.map((item, index) => (
                     <div key={index} className="bg-white p-4 shadow-md rounded mt-4">
                       <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
+                      <h1 className="text-xs font-medium mb-2">Stock</h1>
                       <p>{item.stock}</p>
                     </div>
                   ))}

@@ -1,17 +1,32 @@
-
-import Header from '../components/Header';
-import Navbar from 'src/app/components/Navbar';
-import Footer from './../components/Footer';
+import React from "react";
+import Header from "../components/Header";
+import Navbar from "src/app/components/Navbar";
+import Footer from "./../components/Footer";
+import ReportGenerator from "../components/pdf";
 
 function HomePage() {
-  const movements = [
-    { id: 1, date: '2023-09-25', description: 'Venta', product: 'Producto A', quantity: 5, type: 'Decremento' },
-    { id: 2, date: '2023-09-24', description: 'Compra', product: 'Producto B', quantity: 10, type: 'Incremento' },
+  const transactions = [
+    {
+      id: 1,
+      date: "2023-09-25",
+      description: "Venta",
+      product: "Producto A",
+      quantity: 5,
+      type: "Decremento",
+    },
+    {
+      id: 2,
+      date: "2023-09-24",
+      description: "Compra",
+      product: "Producto B",
+      quantity: 10,
+      type: "Incremento",
+    },
   ];
 
   return (
-    <div className="bg-indigo-600 min-h-screen flex flex-col">
-     <Header />
+    <div className="bg-gray-900 min-h-screen flex flex-col">
+      <Header />
       <div className="flex-grow flex">
         <Navbar />
         <div className="bg-white flex-grow mt-1 mr-2 mb-2 rounded-lg p-4">
@@ -37,10 +52,11 @@ function HomePage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {movements.map((movement) => (
-                    <tr key={movement.id}>
-                      <td>{movement.product}</td>
-                      <td>{movement.quantity}</td>
+                  {/* Mapea y muestra las transacciones */}
+                  {transactions.map((transaction) => (
+                    <tr key={transaction.id}>
+                      <td>{transaction.product}</td>
+                      <td>{transaction.quantity}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -57,6 +73,10 @@ function HomePage() {
             <div className="bg-white p-4 shadow-md rounded mt-4">
               <h2 className="text-xl font-semibold mb-2">Generación de Informes</h2>
               {/* Aquí puedes incluir opciones para generar informes */}
+            </div>
+
+            <div className="p-1 border flex items-center justify-center bg-indigo-400 rounded-md cursor-pointer hover:bg-indigo-500">
+              <ReportGenerator />
             </div>
           </div>
         </div>
