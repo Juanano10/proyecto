@@ -24,7 +24,7 @@ function LoginPage() {
     };
     return (
       <div className="min-h-screen bg-gradient-to-b from-indigo-700 to-purple-500 relative" style={{
-        backgroundImage: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2mMsT7tWPCglVISSGbIKZaHbwFtmrXqROzVOvEasLdQ&s')",
+        backgroundImage: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwl7zCgYOc0XSWF2JYhEvN2usbyWGWswTqEA&usqp=CAU')",
       }}>
         <div className="flex items-center justify-center min-h-screen sm:flex-col">
           <div className="w-full max-w-3xl p-4 rounded-lg shadow-lg bg-opacity-80 bg-white mt-10 relative grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -70,7 +70,7 @@ function LoginPage() {
               </form>
             </div>
             <div className="p-4 bg-gradient-to-b from-indigo-700 to-purple-500 relative">
-              <div className="text-sm text-left text-black">
+              <div className="text-sm text-left text-black justify-center">
                 <h2 className="text-2xl sm:text-3xl font-bold text-center relative mb-4">
                   <span className="text-purple-500">FillFast</span>
                   <span className="text-black">Technology</span>
