@@ -1,11 +1,39 @@
 "use client"
+
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+
+
 import React from 'react';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { format } from 'date-fns';
+
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const ReportGenerator = () => {
+
+
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    // Realiza una solicitud GET a tu punto final de la API para obtener la lista de productos
+    axios
+      .get("/api/product/id")
+      .then((response) => {
+        setProducts(response.data.products);
+      })
+      .catch((error) => {
+        console.error("Error al obtener la lista de productos", error);
+      });
+  }, []);
+
+  const inventoryValue = products.reduce((total, product) => total + product.price, 0);
+  const numProducts = products.length;
+  const averagePrice = numProducts > 0 ? inventoryValue / numProducts : 0;
+
+
   const generatePDF = () => {
     const documentDefinition = {
       content: [
@@ -18,9 +46,10 @@ const ReportGenerator = () => {
           style: 'subheader',
         },
         {
-          text: 'Fecha: 5 de septiembre de 2023',
+          text: `Fecha: ${format(new Date(), 'd \'de\' MMMM \'del\' yyyy')}`,
           style: 'subheader',
-        },
+        }
+        ,
         {
           text: 'Detalles de Cotización',
           style: 'subheader',
@@ -32,9 +61,12 @@ const ReportGenerator = () => {
             widths: ['*', 'auto', 'auto'],
             body: [
               ['Producto', 'Precio Unitario', 'Cantidad'],
-              ['Producto 1', '$100', '2'],
-              ['Producto 2', '$75', '3'],
-              ['Producto 3', '$50', '1'],
+              // Utiliza los datos de `products` para llenar esta tabla
+              ...products.map((product) => [
+                product.name,
+                `$${product.price}`,
+                product.stock, // Puedes reemplazar 'X' con la cantidad real si la tienes disponible
+              ]),
             ],
           },
         },
@@ -48,9 +80,10 @@ const ReportGenerator = () => {
             headerRows: 1,
             widths: ['*', 'auto'],
             body: [
-              ['Subtotal', '$325'],
-              ['Descuento', '-$25'],
-              ['Total', '$300'],
+              ['Subtotal', '$325'], // Calcula el subtotal en función de los datos
+              ['Descuento', '-$25'], // Calcula el descuento en función de los datos
+              // Calcula el total en función de los datos
+              ['Total', `$${products.reduce((total, product) => total + product.price, 0)}`],
             ],
           },
         },
@@ -59,14 +92,14 @@ const ReportGenerator = () => {
           style: 'subheader',
           margin: [0, 20, 0, 10],
         },
+
+        
         {
+
           ul: [
-            'Valor total del inventario: $1000',
-            'Valor promedio del inventario: $333.33',
-            'Ganancia bruta: $100',
-            'Inventario inicial: $1000',
-            'Inventario final: $900',
-            'Ventas totales durante el período: $200',
+            // Incluye información adicional aquí
+            `Valor total del inventario: $${inventoryValue}`,
+            `Valor promedio del inventario: $${averagePrice.toFixed(2)}`,
           ],
         },
       ],
@@ -84,7 +117,8 @@ const ReportGenerator = () => {
         },
       },
     };
-
+    
+    
     const pdfDoc = pdfMake.createPdf(documentDefinition);
 
     pdfDoc.download('informe_cotizacion.pdf');
