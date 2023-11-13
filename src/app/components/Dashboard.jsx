@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
@@ -56,11 +57,26 @@ const Dashboard = () => {
   }, [productData]);
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-md mt-4">
-      <h2 className="text-2xl font-semibold mb-4">Resumen de Stock</h2>
+    <div>
+      {/* Métricas estáticas /}
+      <div className="metrics">
+        <div className="metric">
+          <h2>Total de Ventas</h2>
+          <p>350</p>
+        </div>
+        <div className="metric">
+          <h2>Usuarios Registrados</h2>
+          <p>1200</p>
+        </div>
+        <div className="metric">
+          <h2>Ingresos Mensuales</h2>
+          <p>$15,000</p>
+        </div>
+      </div>
 
+      {/ Gráfico de barras */}
       <div className="bar-chart">
-        <canvas id="barChart" className="w-full h-64"></canvas>
+        <canvas id="barChart"></canvas>
       </div>
     </div>
   );

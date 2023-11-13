@@ -1,54 +1,27 @@
 "use client"
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { useSession } from 'next-auth/react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import ReactLoading from 'react-loading';
-
+import React from 'react';
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 function Header() {
   const { data: session } = useSession();
-  const [status, setStatus] = useState('loading');
-
-  useEffect(() => {
-    // Simulando una carga de datos (puedes ajustar el tiempo según tus necesidades)
-    const timeout = setTimeout(() => {
-      setStatus('loaded');
-    }, 5000); // 2000 milisegundos = 2 segundos
-
-    // Limpia el timeout en caso de que el componente se desmonte antes de que se complete la carga
-    return () => clearTimeout(timeout);
-  }, []);
-
   if (!session) {
-    // Si no está autenticado, se muestra el mensaje
+    // Si no está autenticado, puedes mostrar un mensaje o redirigirlo a la página de inicio de sesión
     return (
-      <div className="bg-slate-900 min-h-screen flex flex-col">
-        <header className="bg-gradient-to-r from-gray-800 to-indigo-900 text-white p-4">
-          <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
-            {/* Logo o Nombre del Sitio (a la izquierda) */}
-            <div className="text-3xl font-extrabold mb-2 sm:mb-0">
-              <span>FillFast</span>
-              <span className="text-blue-500">Technology</span>
-            </div>
-          </div>
-        </header>
-        <div className="flex flex-grow">
-          <Navbar />
-          <div className="bg-white flex-grow flex items-center justify-center mt-1 mr-2 mb-2 rounded-lg p-4">
-            <div className="container mx-auto p-4">
-              <div className="flex items-center justify-center">
-                {status === 'loading' && (
-                  <ReactLoading type={'spin'} color={'#3182ce'} height={'25%'} width={'25%'} />
-                )}
-              </div>
-            </div>
+      <div className="bg-indigo-600 min-h-screen flex flex-col">
+        <Navbar />
+        <div className="bg-white flex-grow flex mt-1 mr-2 mb-2 rounded-lg p-4">
+          <div className="container mx-auto p-4">
+            <h1 className="text-3xl font-bold mb-4">Perfil de Usuario</h1>
+            <p>Debes iniciar sesión para ver tu perfil.</p>
           </div>
         </div>
         <Footer />
       </div>
-    );
+    )
   }
+
   const { user } = session;
   return (
     <header className="bg-gradient-to-r from-gray-800 to-indigo-900 text-white p-4">
