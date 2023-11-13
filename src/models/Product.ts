@@ -4,7 +4,9 @@ import mongoose, { Document } from 'mongoose';
 export interface ProductDocument extends Document {
   name: string;
   price: number;
+  cost: number;
   description: string;
+  category: string;
   code: string;
   stock:string;
 
@@ -16,10 +18,15 @@ const productSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  cost:{
+    type: Number,
+    required: true,
+    min: 1,
+  },
   price: {
     type: Number,
     required: true,
-    min: 0,
+    min: 1,
   },
   description: {
     type: String,
@@ -32,6 +39,10 @@ const productSchema = new mongoose.Schema({
   },
   stock: {
     type: Number,
+    required: true,
+  },
+  category:{
+    type: String,
     required: true,
   },
 });

@@ -52,7 +52,8 @@ function Historial() {
                   <thead>
                     <tr className="bg-black text-white">
                       <th className="border border-black px-4 py-2">Fecha</th>
-                      <th className="border border-black px-4 py-2">Producto</th>
+                      <th className="border border-black px-4 py-2">Codigo Producto</th>
+                      <th className="border border-black px-4 py-2">Nombre Producto</th>
                       <th className="border border-black px-4 py-2">Cantidad</th>
                       <th className="border border-black px-4 py-2">Tipo</th>
                     </tr>
@@ -66,6 +67,9 @@ function Historial() {
                         </td>
                         <td className="border border-black px-4 py-2">
                           {trans.product /* Asegúrate de que trans.product sea legible */}
+                        </td>
+                        <td className="border border-black px-4 py-2">
+                          {trans.nameProduct /* Asegúrate de que trans.product sea legible */}
                         </td>
                         <td className="border border-black px-4 py-2">{trans.stock}</td>
                         <td

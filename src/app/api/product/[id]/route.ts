@@ -4,7 +4,7 @@ import { connectDB } from "../../../../libs/mongodb";
 import InventoryTransaction from "../../../../models/InventarioTrans";
 
 export async function POST(request: Request): Promise<any> {
-  const { name, price, description, code, stock } = await request.json();
+  const { name, price, description, code, stock,cost, category } = await request.json();
 
   if (!name || price === undefined || !description || !code || stock === undefined) {
     return NextResponse.json(
@@ -26,6 +26,8 @@ export async function POST(request: Request): Promise<any> {
       price,
       description,
       code,
+      cost,
+      category,
       stock,
     });
     await product.save();
@@ -37,6 +39,7 @@ export async function POST(request: Request): Promise<any> {
     const transaction = new InventoryTransaction({
       type: transactionType,
       product: product._id,
+      nameProduct: product.name,
       stock: stockDifference,
     });
     await transaction.save();
@@ -46,6 +49,8 @@ export async function POST(request: Request): Promise<any> {
       price: product.price,
       description: product.description,
       code: product.code,
+      cost: product.cost,
+      category: product.category,
       stock: product.stock,
       _id: product._id,
     });

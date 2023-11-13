@@ -18,7 +18,10 @@ function inventario() {
     const price = parseFloat(formData.get("price") as string); // Parse price as a number
     const description = formData.get("description") as string;
     const code = parseFloat(formData.get("code") as string);
+    const cost = parseFloat(formData.get("cost") as string);
     const stock = parseFloat(formData.get("stock") as string);
+    const category =formData.get("category") as string;
+
 
     if (
       !name.trim() ||
@@ -37,6 +40,8 @@ function inventario() {
         price: price,
         description: description,
         code: code,
+        cost: cost,
+        category: category,
         stock: stock,
       });
 
@@ -97,6 +102,21 @@ function inventario() {
                     className="w-full px-4 py-2 rounded border border-gray-800 text-gray-800 focus:outline-none focus:shadow-outline"
                   />
                 </div>
+                <div className="mb-4">
+                  <label
+                    className="block text-sm font-semibold mb-2 text-gray-300"
+                    htmlFor="name"
+                  >
+                    Categoria del Producto
+                  </label>
+                  <input
+                    type="text"
+                    id="category"
+                    name="category"
+                    placeholder="categoria del Producto"
+                    className="w-full px-4 py-2 rounded border border-gray-800 text-gray-800 focus:outline-none focus:shadow-outline"
+                  />
+                </div>
 
                 <div className="mb-4">
                   <label
@@ -110,6 +130,22 @@ function inventario() {
                     id="price"
                     name="price"
                     placeholder="Precio"
+                    className="w-full px-4 py-2 rounded border border-gray-800 text-gray-800 focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label
+                    className="block text-sm font-semibold mb-2 text-gray-300"
+                    htmlFor="price"
+                  >
+                    Costo
+                  </label>
+                  <input
+                    type="number"
+                    id="cost"
+                    name="cost"
+                    placeholder="Costo"
                     className="w-full px-4 py-2 rounded border border-gray-800 text-gray-800 focus:outline-none focus:shadow-outline"
                   />
                 </div>

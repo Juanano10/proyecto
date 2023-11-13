@@ -106,7 +106,9 @@ function HomePage() {
                   <thead className="bg-gray-200 border-b border-black">
                     <tr>
                       <th className="py-2 px-4 text-left">Nombre</th>
+                      <th className="py-2 px-4 text-left">Categoria</th>
                       <th className="py-2 px-4 text-center">Precio</th>
+                      <th className="py-2 px-4 text-center">Costo</th>
                       <th className="py-2 px-4 text-left">Descripción</th>
                       <th className="py-2 px-4 text-center">Código</th>
                       <th className="py-2 px-4 text-center">Stock</th>
@@ -139,7 +141,34 @@ function HomePage() {
                               textOverflow: "ellipsis",
                             }}
                           >
+                            {product.category}
+                          </div>
+                          </td>
+                        <td className="border-r border-black py-2 px-4 text-left">
+                          <div
+                            className="text-gray-900 font-semibold"
+                            style={{
+                              maxWidth: "100px",
+                              overflow: "hidden",
+                              whiteSpace: "nowrap",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
                             {product.price}
+                          </div>
+                          </td>
+                          
+                        <td className="border-r border-black py-2 px-4 text-left">
+                          <div
+                            className="text-gray-900 font-semibold"
+                            style={{
+                              maxWidth: "100px",
+                              overflow: "hidden",
+                              whiteSpace: "nowrap",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {product.cost}
                           </div>
                         </td>
                         <td className="border-r border-black py-2 px-4 text-left">

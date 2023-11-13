@@ -4,6 +4,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 export interface InventoryTransactionDocument extends Document {
   type: 'entrada' | 'salida';
   product: Schema.Types.ObjectId;
+  nameProduct: string;
   stock: string;
   timestamp?: Date;
 }
@@ -11,6 +12,7 @@ export interface InventoryTransactionDocument extends Document {
 const inventoryTransactionSchema = new Schema<InventoryTransactionDocument>({
   type: { type: String, enum: ['entrada', 'salida'], required: true },
   product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
+  nameProduct:{type: String,required:true, ref:'Product'},
   stock: { type: String, required: true },
   timestamp: { type: Date, default: Date.now },
 });
