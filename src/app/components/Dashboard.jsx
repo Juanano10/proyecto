@@ -9,15 +9,28 @@ const Dashboard = () => {
     // Llamada a la API para obtener datos de los productos
     axios.get("/api/product/id")
       .then(response => {
-        const productNames = response.data.products.map(p => p.name);
-        const productStocks = response.data.products.map(p => p.stock);
+        const products = response.data.products;
+
+        // Crear un objeto para almacenar el stock por categoría de producto
+        const stockByCategory = {};
+        products.forEach(product => {
+          const { category, stock } = product;
+          if (!stockByCategory[category]) {
+            stockByCategory[category] = 0;
+          }
+          stockByCategory[category] += stock;
+        });
+
+        // Obtener etiquetas (nombres de categorías) y datos (stock por categoría)
+        const labels = Object.keys(stockByCategory);
+        const data = Object.values(stockByCategory);
 
         setProductData({
-          labels: productNames,
+          labels: labels,
           datasets: [
             {
-              label: 'Stock de productos',
-              data: productStocks,
+              label: 'Stock por Categoría de Producto',
+              data: data,
               backgroundColor: 'rgba(75, 192, 192, 0.2)',
               borderColor: 'rgba(75, 192, 192, 1)',
               borderWidth: 1,
@@ -57,7 +70,7 @@ const Dashboard = () => {
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-md mt-4">
-      <h2 className="text-2xl font-semibold mb-4">Resumen de Stock</h2>
+      <h2 className="text-2xl font-semibold mb-4">Resumen de Stock por Categoría de Producto</h2>
 
       <div className="bar-chart">
         <canvas id="barChart" className="w-full h-64"></canvas>

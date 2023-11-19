@@ -18,6 +18,12 @@ function Analisis() {
   const totalProducts = 350; // Total de productos
   const totalValue = 1400000; // Valor total
 
+  const totalStock = products.reduce((total, product) => total + parseFloat(product.stock) || 0, 0);
+  const totalPrice = products.reduce((total, product) => total + parseFloat(product.price) || 0, 0);
+  const totalCost = products.reduce((total, product) => total + parseFloat(product.cost) || 0, 0);
+  const totalProfit = totalPrice - totalCost;
+
+
   useEffect(() => {
     axios
       .get("/api/product/id")
@@ -28,6 +34,8 @@ function Analisis() {
         console.error("Error al obtener la lista de productos", error);
       });
   }, []);
+
+
 
   const productosConMenosStock = products
     .slice()
@@ -60,7 +68,7 @@ function Analisis() {
                   {/* Contenido de la tabla de resumen de ventas */}
                 </div>
                 <Dashboard />
-                <Dashboard2 /> {/* Primer Dashboard con gráfico de barras */}
+                <Dashboard2 /> 
               </div>
               <div className="w-full md:w-4/12 p-4">
                 <div className="bg-white p-4 shadow-md rounded">
@@ -106,16 +114,16 @@ function Analisis() {
                   </div>
                 </div>
                 <div className="w-full p-4 mt-4 bg-white shadow-md rounded">
-                  <h2 className="text-xl font-semibold mb-2">Usuarios Registrados</h2>
-                  <p>{users}</p>
-                </div>
-                <div className="w-full p-4 mt-4 bg-white shadow-md rounded">
                   <h2 className="text-xl font-semibold mb-2">Total de Productos</h2>
-                  <p>{totalProducts}</p>
+                  <p>{totalStock}</p>
                 </div>
                 <div className="w-full p-4 mt-4 bg-white shadow-md rounded">
                   <h2 className="text-xl font-semibold mb-2">Valor Total</h2>
-                  <p>${totalValue}</p>
+                  <p>${totalCost}</p>
+                </div>
+                <div className="w-full p-4 mt-4 bg-white shadow-md rounded">
+                  <h2 className="text-xl font-semibold mb-2">Ganancia total</h2>
+                  <p>${totalProfit}</p>
                 </div>
               </div>
             </div>

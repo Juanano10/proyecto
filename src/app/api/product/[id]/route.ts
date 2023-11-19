@@ -4,7 +4,7 @@ import { connectDB } from "../../../../libs/mongodb";
 import InventoryTransaction from "../../../../models/InventarioTrans";
 
 export async function POST(request: Request): Promise<any> {
-  const { name, price, description, code, stock,cost, category } = await request.json();
+  const { name, price, description, code, stock, cost, category } = await request.json();
 
   if (!name || price === undefined || !description || !code || stock === undefined) {
     return NextResponse.json(
@@ -19,6 +19,20 @@ export async function POST(request: Request): Promise<any> {
 
   try {
     await connectDB();
+
+    // Verificar si el nombre del producto ya existe
+    const existingProduct = await Product.findOne({ name });
+
+    if (existingProduct) {
+      return NextResponse.json(
+        {
+          message: "Ya existe un producto con este nombre.",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
 
     // Crear un nuevo producto
     const product = new Product({
@@ -68,6 +82,7 @@ export async function POST(request: Request): Promise<any> {
 }
 
 
+
 export async function GET() {
   await connectDB();
   const products = await Product.find();
@@ -77,9 +92,9 @@ export async function GET() {
 
 
 export async function PUT(request: Request): Promise<any> {
-  const { id, name, price, description, code, stock } = await request.json();
+  const { id, name, price, stock, cost } = await request.json();
 
-  if (!id || !name || price === undefined || !description || !code || stock === undefined) {
+  if (!id || !name || price === undefined || stock === undefined || cost === undefined) {
     return NextResponse.json(
       {
         message: "Los campos son requeridos.",
@@ -95,32 +110,21 @@ export async function PUT(request: Request): Promise<any> {
     const productFound = await Product.findById(id);
 
     if (productFound) {
-      const transactionType = stock > productFound.stock ? "entrada" : "salida";
-      const stockDifference = Math.abs(stock - productFound.stock);
-
-      // Crear una nueva transacción sin el campo user
-      const transaction = new InventoryTransaction({
-        type: transactionType,
-        product: productFound._id,
-        stock: stockDifference,
-      });
-
-      await transaction.save();
-
       // Actualizar el producto
-      productFound.name = name;
-      productFound.price = price;
-      productFound.description = description;
-      productFound.code = code;
-      productFound.stock = stock;
-      await productFound.save();
+      const updateFields: Record<string, any> = {
+        name,
+        price,
+        stock,
+        cost,
+      };
+
+      await Product.findByIdAndUpdate(id, updateFields);
 
       return NextResponse.json({
-        name: productFound.name,
-        price: productFound.price,
-        description: productFound.description,
-        code: productFound.code,
-        stock: productFound.stock,
+        name: updateFields.name,
+        price: updateFields.price,
+        stock: updateFields.stock,
+        cost: updateFields.cost,
         _id: productFound._id,
       });
     } else {
@@ -140,11 +144,12 @@ export async function PUT(request: Request): Promise<any> {
         message: "Error interno del servidor.",
       },
       {
-        status: 500, // Código de estado general para "Error Interno del Servidor"
+        status: 500,
       }
     );
   }
 }
+
 
 
 

@@ -1,50 +1,52 @@
+"use client";
 import React, { useEffect, useState } from 'react';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
 
 const Dashboard2 = () => {
-  const [productData, setProductData] = useState([]);
+  const [transactionData, setTransactionData] = useState([]);
 
   useEffect(() => {
-    // Llamada a la API para obtener datos de los productos
-    axios.get("/api/product/id")
+    // Llamada a la API para obtener datos de las transacciones
+    axios.get("/api/InventoryTransaction/id")
       .then(response => {
-        const productNames = response.data.products.map(p => p.name);
-        const productStocks = response.data.products.map(p => p.stock);
+        const transactions = response.data;
 
-        setProductData({
-          labels: productNames,
+        // Agrupa las transacciones por mes
+        const transactionsByMonth = transactions.reduce((acc, transaction) => {
+          const monthYear = new Date(transaction.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+          if (!acc[monthYear]) {
+            acc[monthYear] = 0;
+          }
+          acc[monthYear] += 1;
+          return acc;
+        }, {});
+
+        // Obtén etiquetas (nombres de meses) y datos (cantidad de transacciones por mes)
+        const labels = Object.keys(transactionsByMonth);
+        const data = Object.values(transactionsByMonth);
+
+        setTransactionData({
+          labels: labels,
           datasets: [
             {
-              label: 'Stock de productos',
-              data: productStocks,
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-              ],
-              borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-              ],
+              label: 'Transacciones de Inventario por Mes',
+              data: data,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
               borderWidth: 1,
             },
           ],
         });
       })
       .catch(error => {
-        console.error("Error al obtener la lista de productos", error);
+        console.error("Error fetching inventory transaction data", error);
       });
   }, []);
 
   useEffect(() => {
-    if (productData.labels && productData.labels.length > 0) {
-      const ctx = document.getElementById('pieChart').getContext('2d');
+    if (transactionData.labels && transactionData.labels.length > 0) {
+      const ctx = document.getElementById('barChart').getContext('2d');
 
       // Destruye el gráfico anterior si existe
       const existingChart = Chart.getChart(ctx);
@@ -52,30 +54,30 @@ const Dashboard2 = () => {
         existingChart.destroy();
       }
 
-      // Crea un nuevo gráfico de torta con los datos obtenidos
+      // Crea un nuevo gráfico de barras con los datos obtenidos
       new Chart(ctx, {
-        type: 'pie',
-        data: productData,
+        type: 'bar',
+        data: transactionData,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
       });
     }
-  }, [productData]);
+  }, [transactionData]);
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-md mt-4">
-      <h2 className="text-xl font-semibold mb-2">Resumen de Stock</h2>
+      <h2 className="text-xl font-semibold mb-2">Resumen de Transacciones de Inventario por Mes</h2>
 
-      <div className="flex">
-        <div className="pie-chart w-2/3">
-          <canvas id="pieChart" className="w-full h-32"></canvas>
-        </div>
-        <div className="timeline w-1/3">
-          {/* Agrega aquí tu componente de serie de tiempo */}
-          {/* Por ejemplo: <TimelineComponent /> */}
-        </div>
+      <div className="bar-chart">
+        <canvas id="barChart" className="w-full h-32"></canvas>
       </div>
     </div>
   );
 };
-
 
 export default Dashboard2;

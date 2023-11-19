@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import Navbar from './Navbar';
+import Footer from './Footer';
 import ReactLoading from 'react-loading';
 
 function Header() {

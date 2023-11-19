@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { connectDB } from "../../../../libs/mongodb";
-import {User} from "../../../../models/user";
+import { User } from "../../../../models/user";
 import bcrypt from 'bcryptjs';
 
 const handler = NextAuth({
@@ -9,20 +9,34 @@ const handler = NextAuth({
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: { label: "email", type: "email", placeholder: "jsmith" },
-        password: { label: "Password", type: "password", placeholder: "********" },
+        email: { label: "Correo Electrónico", type: "email", placeholder: "jsmith" },
+        password: { label: "Contraseña", type: "password", placeholder: "********" },
       },
       async authorize(credentials, req) {
+        // Verifica si se proporcionaron todas las credenciales necesarias
+        if (!credentials.email || !credentials.password) {
+          throw new Error("Por favor, proporciona tanto el correo electrónico como la contraseña");
+        }
+
         await connectDB();
-        console.log(credentials);
 
-        const userFound = await User.findOne({ email: credentials?.email }).select('+password');
-        if (!userFound) throw new Error("Invalid credentials");
+        // Busca el usuario por correo electrónico
+        const userFound = await User.findOne({ email: credentials.email }).select('+password');
+        
+        // Verifica si se encontró el usuario
+        if (!userFound) {
+          throw new Error("Correo electrónico incorrecto");
+        }
 
-        const passwordMatch = await bcrypt.compare(credentials!.password, userFound.password);
-        if (!passwordMatch) throw new Error("Invalid credentials");
+        // Compara la contraseña proporcionada con la contraseña almacenada en la base de datos
+        const passwordMatch = await bcrypt.compare(credentials.password, userFound.password);
 
-        console.log(userFound);
+        // Verifica si la contraseña coincide
+        if (!passwordMatch) {
+          throw new Error("Contraseña incorrecta");
+        }
+
+        // Devuelve el objeto de usuario si las credenciales son válidas
         return userFound;
       },
     }),

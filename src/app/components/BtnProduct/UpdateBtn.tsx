@@ -1,37 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-
-
 
 interface UpdateBtnProps {
   id: string;
   name: string;
   price: number;
-  description: string;
-  code: string;
   stock: string;
+  cost: number;
 }
 
-const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, price, description, code, stock }) => {
+const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, price, stock, cost }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatedName, setUpdatedName] = useState(name);
   const [updatedPrice, setUpdatedPrice] = useState(price);
-  const [updatedDescription, setUpdatedDescription] = useState(description);
-  const [updatedCode, setUpdatedCode] = useState(code);
   const [updatedStock, setUpdatedStock] = useState(stock);
+  const [updatedCost, setUpdatedCost] = useState(cost);
+
+  useEffect(() => {
+    // Este efecto se ejecutará cuando el componente se monte
+    setUpdatedName(name);
+    setUpdatedPrice(price);
+    setUpdatedStock(stock);
+    setUpdatedCost(cost);
+  }, [name, price, stock, cost]); // Dependencias para que el efecto se ejecute cuando estas propiedades cambien
 
   const handleUpdateProduct = () => {
     const updatedProductData = {
       id,
       name: updatedName,
       price: updatedPrice,
-      description: updatedDescription,
-      code: updatedCode,
       stock: updatedStock,
+      cost: updatedCost,
     };
-
-    console.log("Datos a enviar:", updatedProductData);
 
     axios
       .put(`/api/product/${id}`, updatedProductData)
@@ -76,23 +77,16 @@ const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, price, description, cod
         />
         <input
           type="text"
-          placeholder="Nueva descripción"
-          value={updatedDescription}
-          onChange={(e) => setUpdatedDescription(e.target.value)}
-          className="border border-gray-300 focus:border-blue-500 focus:outline-none py-2 px-4 w-full rounded-md placeholder-gray-400 text-gray-800 flex mb-4"
-        />
-        <input
-          type="text"
-          placeholder="Nuevo código"
-          value={updatedCode}
-          onChange={(e) => setUpdatedCode(e.target.value)}
-          className="border border-gray-300 focus:border-blue-500 focus:outline-none py-2 px-4 w-full rounded-md placeholder-gray-400 text-gray-800 flex mb-4"
-        />
-        <input
-          type="text"
           placeholder="Nuevo stock"
           value={updatedStock}
           onChange={(e) => setUpdatedStock(e.target.value)}
+          className="border border-gray-300 focus:border-blue-500 focus:outline-none py-2 px-4 w-full rounded-md placeholder-gray-400 text-gray-800 flex mb-4"
+        />
+        <input
+          type="number"
+          placeholder="Nuevo costo"
+          value={updatedCost}
+          onChange={(e) => setUpdatedCost(Number(e.target.value))}
           className="border border-gray-300 focus:border-blue-500 focus:outline-none py-2 px-4 w-full rounded-md placeholder-gray-400 text-gray-800 flex mb-4"
         />
         <div className="flex flex-wrap justify-end gap-4">
@@ -111,8 +105,7 @@ const UpdateBtn: React.FC<UpdateBtnProps> = ({ id, name, price, description, cod
         </div>
       </Modal>
     </div>
-);
-
+  );
 };
 
 export { UpdateBtn };

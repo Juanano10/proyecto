@@ -109,13 +109,21 @@ function inventario() {
                   >
                     Categoria del Producto
                   </label>
-                  <input
-                    type="text"
-                    id="category"
-                    name="category"
-                    placeholder="categoria del Producto"
-                    className="w-full px-4 py-2 rounded border border-gray-800 text-gray-800 focus:outline-none focus:shadow-outline"
-                  />
+                  <select
+  id="category"
+  name="category"
+  className="w-full px-4 py-2 rounded border border-gray-800 text-gray-800 focus:outline-none focus:shadow-outline"
+>
+  <option value="" disabled selected>
+    Selecciona una categoría
+  </option>
+  <option value="zapatillas">Zapatillas</option>
+  <option value="camisetas">Camisetas</option>
+  <option value="pantalones">Pantalones</option>
+  <option value="accesorios">Accesorios</option>
+  {/* Agrega más opciones según sea necesario */}
+</select>
+
                 </div>
 
                 <div className="mb-4">

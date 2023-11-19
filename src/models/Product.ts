@@ -1,6 +1,16 @@
 // models/Product.ts
 import mongoose, { Document } from 'mongoose';
 
+// Enumeración de los tipos de productos
+enum ProductTypes {
+  ZAPATILLAS = "zapatillas",
+  CAMISETAS = "camisetas",
+  PANTALONES = "pantalones",
+  ACCESORIOS = "accesorios",
+  // Agrega más tipos de productos según sea necesario
+}
+
+
 export interface ProductDocument extends Document {
   name: string;
   price: number;
@@ -41,9 +51,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  category:{
+  category: {
     type: String,
-    required: true,
+    enum: Object.values(ProductTypes),
+    default: ProductTypes.ZAPATILLAS,
   },
 });
 

@@ -5,7 +5,7 @@ export const config = {
 
     matcher:[
         '/home',
-        '/register',
+  
         '/inventario',
         '/historial',
         '/analisis',
