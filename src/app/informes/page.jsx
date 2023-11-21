@@ -1,35 +1,82 @@
+import React from "react";
+import Header from "../components/Header";
+import Navbar from "src/app/components/Navbar";
+import Footer from "./../components/Footer";
+import ReportGenerator from "../components/pdf";
 
-import Navbar from './../components/Navbar';
-import Footer from './../components/Footer';
-import Header from '../components/Header';
-
-function ReportPage() {
-  const reportData = [
-    { id: 1, title: 'Informe: Reporte de venta', description: 'Descripción del informe 1' },
-    { id: 2, title: 'Informe 2', description: 'Descripción del informe 2' },
-    { id: 3, title: 'Informe 3', description: 'Descripción del informe 3' },
-    // Agrega más informes según sea necesario
+function HomePage() {
+  const transactions = [
+    {
+      id: 1,
+      date: "2023-09-25",
+      description: "Venta",
+      product: "Producto A",
+      quantity: 5,
+      type: "Decremento",
+    },
+    {
+      id: 2,
+      date: "2023-09-24",
+      description: "Compra",
+      product: "Producto B",
+      quantity: 10,
+      type: "Incremento",
+    },
   ];
 
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col">
-    <Header />
+      <Header />
       <div className="flex-grow flex">
         <Navbar />
         <div className="bg-white flex-grow mt-1 mr-2 mb-2 rounded-lg p-4">
           <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-4">Informes Disponibles</h1>
+            <h1 className="text-3xl font-bold mb-4">Sistema de Inventario</h1>
+            {/* Búsqueda y Filtrado */}
+            <div className="mb-4">
+              <input
+                className="border border-gray-400 py-2 px-4 w-full rounded-md"
+                type="text"
+                placeholder="Buscar productos"
+              />
+            </div>
 
+            {/* Lista de Productos con Búsqueda y Filtrado */}
             <div className="bg-white p-4 shadow-md rounded">
-              <h2 className="text-xl font-semibold mb-2">Lista de Informes</h2>
-              <ul>
-                {reportData.map((report) => (
-                  <li key={report.id} className="mb-4">
-                    <h3 className="text-lg font-semibold">{report.title}</h3>
-                    <p className="text-gray-600">{report.description}</p>
-                  </li>
-                ))}
-              </ul>
+              <h2 className="text-xl font-semibold mb-2">Lista de Productos</h2>
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Stock Disponible</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* Mapea y muestra las transacciones */}
+                  {transactions.map((transaction) => (
+                    <tr key={transaction.id}>
+                      <td>{transaction.product}</td>
+                      <td>{transaction.quantity}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Control de Stock */}
+            <div className="bg-white p-4 shadow-md rounded mt-4">
+              <h2 className="text-xl font-semibold mb-2">Control de Stock</h2>
+              {/* Aquí puedes agregar controles para ajustar el stock de productos */}
+            </div>
+
+            {/* Generación de Informes */}
+            <div className="bg-white p-4 shadow-md rounded mt-4">
+              <h2 className="text-xl font-semibold mb-2">Generación de Informes</h2>
+              {/* Aquí puedes incluir opciones para generar informes */}
+            </div>
+
+            <div className="p-1 border flex items-center justify-center bg-indigo-400 rounded-md cursor-pointer hover:bg-indigo-500">
+              <ReportGenerator />
             </div>
           </div>
         </div>
@@ -39,6 +86,4 @@ function ReportPage() {
   );
 }
 
-export default ReportPage;
-
-
+export default HomePage;

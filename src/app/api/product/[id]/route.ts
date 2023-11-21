@@ -90,7 +90,6 @@ export async function GET() {
       
 }
 
-
 export async function PUT(request: Request): Promise<any> {
   const { id, name, price, stock, cost } = await request.json();
 
@@ -119,6 +118,20 @@ export async function PUT(request: Request): Promise<any> {
       };
 
       await Product.findByIdAndUpdate(id, updateFields);
+
+      // Crear una nueva transacción
+      const transactionType = stock > productFound.stock ? "entrada" : "salida";
+      const stockDifference = Math.abs(stock - productFound.stock);
+
+      // Crear una nueva transacción con el campo nameProduct
+      const transaction = new InventoryTransaction({
+        type: transactionType,
+        product: productFound._id,
+        stock: stockDifference,
+        nameProduct: name, // Asegúrate de proporcionar un valor adecuado aquí
+      });
+
+      await transaction.save();
 
       return NextResponse.json({
         name: updateFields.name,
