@@ -8,9 +8,9 @@ const Dashboard2 = () => {
 
   useEffect(() => {
     // Llamada a la API para obtener datos de las transacciones
-    axios.get("/api/InventoryTransaction/id")
+    axios.get("api/InventoryTransaction")
       .then(response => {
-        const transactions = response.data;
+        const transactions = response.data.history;
 
         // Agrupa las transacciones por mes
         const transactionsByMonth = transactions.reduce((acc, transaction) => {
@@ -46,7 +46,7 @@ const Dashboard2 = () => {
 
   useEffect(() => {
     if (transactionData.labels && transactionData.labels.length > 0) {
-      const ctx = document.getElementById('barChart').getContext('2d');
+      const ctx = document.getElementById('barChart2').getContext('2d');
 
       // Destruye el gráfico anterior si existe
       const existingChart = Chart.getChart(ctx);
@@ -74,7 +74,7 @@ const Dashboard2 = () => {
       <h2 className="text-xl font-semibold mb-2">Resumen de Transacciones de Inventario por Mes</h2>
 
       <div className="bar-chart">
-        <canvas id="barChart" className="w-full h-32"></canvas>
+        <canvas id="barChart2" className="w-full h-32"></canvas>
       </div>
     </div>
   );

@@ -8,23 +8,21 @@ import Header from '../components/Header';
 import Dashboard from "../components/dashboard";
 import Dashboard2 from "../components/dashboard2";
 import ReactPaginate from "react-paginate";
-
+import PredictedStockDashboard from "../components/PredictedStockDashboard";
+import DashboardTransacciones from "../components/DashboardTransacciones"
 function Analisis() {
   const [products, setProducts] = useState([]);
+  const [predictedStock, setPredictedStock] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 3; // Cantidad de productos por página
-
-  const users = 3; // Número de usuarios registrados
-  const totalProducts = 350; // Total de productos
-  const totalValue = 1400000; // Valor total
+  const itemsPerPage = 3;
 
   const totalStock = products.reduce((total, product) => total + parseFloat(product.stock) || 0, 0);
   const totalPrice = products.reduce((total, product) => total + parseFloat(product.price) || 0, 0);
   const totalCost = products.reduce((total, product) => total + parseFloat(product.cost) || 0, 0);
   const totalProfit = totalPrice - totalCost;
 
-
   useEffect(() => {
+    // Obtiene datos de la API de productos
     axios
       .get("/api/product/id")
       .then((response) => {
@@ -33,9 +31,17 @@ function Analisis() {
       .catch((error) => {
         console.error("Error al obtener la lista de productos", error);
       });
+
+    // Obtiene datos de la API de predicción
+    axios
+      .get('http://localhost:5000/predict')
+      .then((response) => {
+        setPredictedStock(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener datos de predicción", error);
+      });
   }, []);
-
-
 
   const productosConMenosStock = products
     .slice()
@@ -68,7 +74,9 @@ function Analisis() {
                   {/* Contenido de la tabla de resumen de ventas */}
                 </div>
                 <Dashboard />
-                <Dashboard2 /> 
+                <Dashboard2 />
+                <DashboardTransacciones />
+                <PredictedStockDashboard predictedStock={predictedStock} />
               </div>
               <div className="w-full md:w-4/12 p-4">
                 <div className="bg-white p-4 shadow-md rounded">
@@ -126,6 +134,7 @@ function Analisis() {
                   <p>${totalProfit}</p>
                 </div>
               </div>
+              {/* Nuevo dashboard aquí */}
             </div>
           </div>
         </div>
