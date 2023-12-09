@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "../../../../libs/mongodb";
-import InventoryTransaction from "../../../../models/InventarioTrans";
+import { connectDB } from "../../../libs/mongodb";
+import InventoryTransaction from "../../../models/InventarioTrans";
 
 
 

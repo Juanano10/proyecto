@@ -19,7 +19,7 @@ function Historial() {
   useEffect(() => {
     // Realiza la solicitud de datos a la API
     axios
-      .get("/api/InventoryTransaction/id")
+      .get("/api/InventoryTransaction")
       .then((response) => {
         setInventarioTrans(response.data.history);
       })
