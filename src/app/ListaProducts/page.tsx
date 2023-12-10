@@ -57,10 +57,10 @@ function HomePage() {
         <Navbar />
         <div className="mb-4"></div>
         <div className="mb-4"></div>
-        <div className="bg-gradient-to-r from-blue-700 via-indigo-500 to-blue-900 flex-grow mr-2 mb-1 rounded-lg p-4 mt-1 max-w-[sm]">
+        <div className="bg-white flex-grow mr-2 mb-1 rounded-lg p-4 mt-1 max-w-[sm]">
           <div className="container mx-auto p-1 mt-3">
             <div className="flex items-center justify-between mb-4">
-              <h1 className="text-3xl font-bold flex-grow text-white">
+              <h1 className="text-3xl font-bold flex-grow text-black">
                 Sistema de Inventario
               </h1>
               <Link href="/inventario">
@@ -98,7 +98,6 @@ function HomePage() {
                   </div>
                 </div>
               ) : (
-                // Tu contenido cuando no está cargando
 
                 // Tu contenido cuando no está cargando
 

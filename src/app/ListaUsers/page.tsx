@@ -47,11 +47,11 @@ function HomePage() {
       <Header />
       <div className="flex-grow flex">
         <Navbar />
-        <div className="bg-blue-900 flex-grow mr-2 mb-1 rounded-lg p-4 mt-1 max-w-[sm]">
+        <div className="bg-white flex-grow mr-2 mb-1 rounded-lg p-4 mt-1 max-w-[sm]">
           <div className="container mx-auto p-4">
             <div className="flex items-center justify-between mb-4">
               {/* Añadimos margen inferior para mantener el espacio */}
-              <h1 className="text-3xl font-bold flex-grow text-white">
+              <h1 className="text-3xl font-bold flex-grow text-black">
                 Usuarios del Sistema
               </h1>
             </div>

@@ -55,7 +55,7 @@ function LoginPage() {
       className="min-h-screen bg-gradient-to-b from-indigo-700 to-purple-500 relative"
       style={{
         backgroundImage:
-          "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwl7zCgYOc0XSWF2JYhEvN2usbyWGWswTqEA&usqp=CAU')",
+          "url('https://img.freepik.com/foto-gratis/fondo-azul-degradado-lujo-abstracto-azul-oscuro-liso-banner-estudio-vineta-negra_1258-52393.jpg?w=2000&t=st=1702243039~exp=1702243639~hmac=7c753441475bd2f1b833a5526b9bb234af762fb67dfbad3e01cdc79e05d5aec8')",
       }}
     >
       <div className="flex items-center justify-center min-h-screen sm:flex-col">
@@ -116,20 +116,21 @@ function LoginPage() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="p-4 bg-gradient-to-b from-indigo-700 to-purple-500 relative"
+            className="p-4 bg-gradient-to-b from-blue-200 to-blue-500 relative"
           >
-            <div className="text-sm text-left text-black justify-center">
-              <h2 className="text-2xl sm:text-3xl font-bold text-center relative mb-4">
-                <span className="text-purple-500">FillFast</span>
-                <span className="text-black">Technology</span>
-                <span className="absolute -bottom-5 left-0 w-full h-1 bg-indigo-400"></span>
-              </h2>
-              <p className="text-base sm:text-lg font-semibold text-center text-gray-1100 mb-4">
-                Potencia tu negocio con una gestión de inventario inteligente.
-                Controla tus productos y optimiza tus operaciones con nuestra
-                plataforma de gestión de inventario.
-              </p>
-            </div>
+<div className="text-sm text-left text-black justify-center">
+  <h2 className="text-2xl sm:text-3xl font-bold text-center relative mb-4">
+    <div className="text-3xl font-extrabold mb-2 sm:mb-0">
+      <span>FillFast</span><span className="text-blue-500">Technology</span>
+    </div>
+    <span className="absolute -bottom-5 left-0 w-full h-1 bg-black"></span>
+  </h2>
+  <p className="text-base sm:text-lg font-semibold text-center text-gray-1100 mb-4 mx-4">
+    Potencia tu negocio con una gestión de inventario inteligente.
+    Controla tus productos y optimiza tus operaciones con nuestra
+    plataforma de gestión de inventario.
+  </p>
+</div>
           </motion.div>
         </motion.div>
       </div>
