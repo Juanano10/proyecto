@@ -55,7 +55,7 @@ function LoginPage() {
       className="min-h-screen bg-gradient-to-b from-indigo-700 to-purple-500 relative"
       style={{
         backgroundImage:
-          "url('https://img.freepik.com/foto-gratis/fondo-azul-degradado-lujo-abstracto-azul-oscuro-liso-banner-estudio-vineta-negra_1258-52393.jpg?w=2000&t=st=1702243039~exp=1702243639~hmac=7c753441475bd2f1b833a5526b9bb234af762fb67dfbad3e01cdc79e05d5aec8')",
+          "url('https://r4.wallpaperflare.com/wallpaper/553/119/620/windows-10-windows-10x-windows-11-minimalism-material-minimal-hd-wallpaper-d030b5990f46fe33682fc7e6cbf68458.jpg')",
       }}
     >
       <div className="flex items-center justify-center min-h-screen sm:flex-col">
